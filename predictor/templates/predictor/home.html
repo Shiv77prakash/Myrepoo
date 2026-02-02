@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Exam Score Predictor</title>
+    <style>
+        body { font-family: Arial; margin: 50px; }
+        .container { max-width: 500px; margin: auto; }
+        input, button { padding: 10px; margin-top: 10px; width: 100%; }
+        .result { margin-top: 20px; font-size: 18px; color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload CSV & Predict Exam Score</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>Upload CSV (first column = feature, second column = feature,Third colum=predicted:):</label>
+            <input type="file" name="csv_file" accept=".csv" required>
+
+            <label>Enter Study Hours (feature value):</label>
+            <input type="number" step="0.1" name="hours">
+
+            <label>Enter your attendence (feature value):</label>
+            <input type="number" step="0.1" name="attendence">
+
+            <button type="submit">Train & Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result">
+            <p>For {{ hours }} hours studied, predicted exam score is: 
+               <b>{{ prediction|floatformat:2 }}</b></p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
