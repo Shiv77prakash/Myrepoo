@@ -9,6 +9,8 @@ def home(request):
     prediction = None
     hours = None
     attendence= None
+    features=None
+    
     
 
     if request.method == "POST" and request.FILES.get("csv_file"):
@@ -43,5 +45,6 @@ def home(request):
             attendence =float(request.POST.get("attendence"))
             features= np.array([[hours,attendence]])
             prediction = model.predict(features)[0]
+
 
     return render(request, "predictor/home.html", {"prediction": prediction, "hours": hours,"attendence":attendence,"features": features})
